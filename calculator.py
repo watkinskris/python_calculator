@@ -37,28 +37,38 @@ def division_by_0(a, symbol):
     return a
 
 
-continue_calc = True
-total = 0
-operations = {
-    "+": add,
-    "-": subtract,
-    "*": multiply,
-    "/": divide,
-}
-print(logo)
-num1 = int(input("Enter a number: "))
-while continue_calc:
-    operator = choose_operator(operations)
-    num2 = int(input("Enter another number: "))
-    # check to see if it is division by 0
-    num2 = division_by_0(num2, operator)
+def calculator():
+    total = 0
+    operations = {
+        "+": add,
+        "-": subtract,
+        "*": multiply,
+        "/": divide,
+    }
+    continue_calc = True
 
-    function = operations[operator]
-    total = function(num1, num2)
+    print(logo)
+    num1 = int(input("Enter a number: "))
 
-    print(f"The total of {num1} {operator} {num2} is: {total}")
-    user_calc_choice = input("Do you want to continue this calculation ('y' or 'n'): ")
-    if user_calc_choice == 'n':
-        continue_calc = False
-    else:
-        num1 = total
+    while continue_calc:
+        operator = choose_operator(operations)
+        num2 = int(input("Enter another number: "))
+        # check to see if it is division by 0
+        num2 = division_by_0(num2, operator)
+
+        function = operations[operator]
+        total = function(num1, num2)
+
+        print(f"The total of {num1} {operator} {num2} is: {total}")
+        user_choice = input("Do you want to continue this calculation ('y' to continue, 'n' for a new calculation or "
+                            "e' to exit: ")
+        if user_choice == 'y':
+            num1 = total
+        elif user_choice == 'n':
+            calculator()
+        else:
+            continue_calc = False
+            print("Goodbye")
+
+
+calculator()
