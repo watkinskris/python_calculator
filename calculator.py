@@ -3,20 +3,17 @@ from calculator_art import logo
 
 def add(a, b):
     """add(a,b) takes two ints and returns their sum"""
-    sum_total = a + b
-    return sum_total
+    return a + b
 
 
 def subtract(a, b):
     """subtract(a,b) takes two ints and returns the difference"""
-    dif = a - b
-    return dif
+    return a - b
 
 
 def multiply(a, b):
     """multiply(a,b) takes two ints and returns their product"""
-    product = a * b
-    return product
+    return a * b
 
 
 def divide(a, b):
@@ -27,44 +24,41 @@ def divide(a, b):
     quotient = a / b
     return quotient
 
+def choose_operator(op_dict):
+    for symbol in op_dict:
+        print(symbol)
+    user_operator = input("Pick an operation from the list above: ")
+    return user_operator
 
-continue_calc = False
-another_calc = True
+def division_by_0(a, symbol):
+    while a == 0 and symbol == "/":
+        print("Division by 0 is not allowed. ")
+        a = int(input("Pick another number: "))
+    return a
+
+
+continue_calc = True
 total = 0
-
+operations = {
+    "+": add,
+    "-": subtract,
+    "*": multiply,
+    "/": divide,
+}
 print(logo)
-while another_calc:
-    if not continue_calc:
-        num1 = int(input("Enter a number: "))
+num1 = int(input("Enter a number: "))
+while continue_calc:
+    operator = choose_operator(operations)
+    num2 = int(input("Enter another number: "))
+    # check to see if it is division by 0
+    num2 = division_by_0(num2, operator)
+
+    function = operations[operator]
+    total = function(num1, num2)
+
+    print(f"The total of {num1} {operator} {num2} is: {total}")
+    user_calc_choice = input("Do you want to continue this calculation ('y' or 'n'): ")
+    if user_calc_choice == 'n':
+        continue_calc = False
     else:
         num1 = total
-    num2 = int(input("Enter another number: "))
-    operation = input("Enter the operator ( + - * / ): ")
-    # check to see if it is division by 0
-    if num2 == 0 and operation == "/":
-        while num2 == 0:
-            print("Division by 0 is not allowed. ")
-            num2 = int(input("Pick another number: "))
-
-    # picking correct function
-    if operation == "+":
-        total = add(num1, num2)
-    elif operation == "-":
-        total = subtract(num1, num2)
-    elif operation == "*":
-        total = multiply(num1, num2)
-    elif operation == "/":
-        total = divide(num1, num2)
-
-    print(f"The total of {num1} {operation} {num2} is: {total}")
-    user_calc_choice = input("Do you want to continue this calculation ('y' or 'n'): ")
-    if user_calc_choice == 'y':
-        continue_calc = True
-    else:
-        user_choice = input("Do you want to perform a new calculation ('y' or 'n'): ")
-        if user_choice == 'n':
-            another_calc = False
-            print("Goodbye")
-        else:
-            continue_calc = False
-            total = 0
